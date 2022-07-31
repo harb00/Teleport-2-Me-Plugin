@@ -24,7 +24,7 @@ public class Teleport2Me : IPlugin
 }
 
 
-public class Teleport2MeModule : ITargetChatCommand
+public class Teleport2MeCommand : ITargetChatCommand
 {
     public string Key => "Teleport2Me";
 
@@ -44,7 +44,7 @@ public class Teleport2MeModule : ITargetChatCommand
         var tileInfrontActor = actorRoomUser.SquareInFront;
         var itemsInfrontActor = room.GetRoomItemHandler().GetFurniObjects(tileInfrontActor.X, tileInfrontActor.Y);
 
-        if (target.Username == session.GetHabbo().Username) {
+        if (target == session.GetHabbo()) {
             session.SendWhisper("Get a life.");
             return Task.CompletedTask;
         }
