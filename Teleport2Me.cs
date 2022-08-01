@@ -1,4 +1,4 @@
-﻿using Plus.Plugins;
+using Plus.Plugins;
 using Plus.HabboHotel.Rooms.Chat.Commands;
 using Plus.HabboHotel.GameClients;
 using Plus.HabboHotel.Rooms;
@@ -22,7 +22,6 @@ public class Teleport2Me : IPlugin
         Console.WriteLine(WHITE + "[" + CYAN + pluginInfo.Name + WHITE + "] " + message);    }
 
 }
-
 
 public class Teleport2MeCommand : ITargetChatCommand
 {
@@ -57,7 +56,7 @@ public class Teleport2MeCommand : ITargetChatCommand
             session.SendWhisper("Wrong syntax. Use :tptome %target% (optionally) force");
             return Task.CompletedTask;
         }
-        
+
         switch (actorRoomUser.RotBody)
         {
             case 1:
@@ -77,14 +76,14 @@ public class Teleport2MeCommand : ITargetChatCommand
                 tileInfrontActor.Y -= 1;
                 break;
         }
-        
-        if (!room.GetGameMap().ValidTile(tileInfrontActor.X, tileInfrontActor.Y)) {
+
+        var ActorHasItemsInfront = room.GetRoomItemHandler().GetFurniObjects(tileInfrontActor.X, tileInfrontActor.Y).Count > 0;
+        if (!room.GetGameMap().IsInMap(tileInfrontActor.X, tileInfrontActor.Y) && !ActorHasItemsInfront) {
             session.SendWhisper("The tile is invalid as it's outside the map.");
             return Task.CompletedTask;
         }
 
-        var itemsInfrontActor = room.GetRoomItemHandler().GetFurniObjects(tileInfrontActor.X, tileInfrontActor.Y);
-        if (itemsInfrontActor.Count > 0 && parameters.Length == 0) {
+        if (ActorHasItemsInfront && parameters.Length == 0) {
             session.SendWhisper("Blocked by furniture. Force teleportation with - :tptome %target% force");
             return Task.CompletedTask;
         }
@@ -98,7 +97,6 @@ public class Teleport2MeCommand : ITargetChatCommand
             teleportUser(room, targetRoomUser, actorRoomUser, tileInfrontActor);
             return Task.CompletedTask;
         }
-
         return Task.CompletedTask;
     }
 
