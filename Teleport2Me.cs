@@ -26,9 +26,9 @@ public class Teleport2Me : IPlugin
 
 public class Teleport2MeCommand : ITargetChatCommand
 {
-    public string Key => "Teleport2Me";
+    public string Key => "tptome";
 
-    public string PermissionRequired => "tptome_plugin";
+    public string PermissionRequired => "tp2me_plugin";
 
     public string Parameters => "%target% (force)";
 
