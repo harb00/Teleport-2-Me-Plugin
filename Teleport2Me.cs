@@ -77,13 +77,13 @@ public class Teleport2MeCommand : ITargetChatCommand
                 break;
         }
 
-        var ActorHasItemsInfront = room.GetRoomItemHandler().GetFurniObjects(tileInfrontActor.X, tileInfrontActor.Y).Count > 0;
+        var actorHasItemsInfront = room.GetRoomItemHandler().GetFurniObjects(tileInfrontActor.X, tileInfrontActor.Y).Count > 0;
         if (!room.GetGameMap().IsInMap(tileInfrontActor.X, tileInfrontActor.Y) && !ActorHasItemsInfront) {
             session.SendWhisper("The tile is invalid as it's outside the map.");
             return Task.CompletedTask;
         }
 
-        if (ActorHasItemsInfront && parameters.Length == 0) {
+        if (actorHasItemsInfront && parameters.Length == 0) {
             session.SendWhisper("Blocked by furniture. Force teleportation with - :tptome %target% force");
             return Task.CompletedTask;
         }
